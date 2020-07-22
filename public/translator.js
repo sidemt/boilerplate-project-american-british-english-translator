@@ -13,17 +13,20 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function translateHandler(event){
-  console.log('translate');
   let selection = document.getElementById('locale-select').value;
   let val = TEXTAREA.value;
-  console.log('textarea', val);
-  console.log('select', selection);
 
   if (val.length === 0){
     showError();
   }else{
-    val = replaceTags(val);
-    TRANSLATED.innerHTML = translate(selection, val);
+    val = replaceTags(val); // Sanitize user input
+    let newStr = translate(selection, val);
+    if(newStr.indexOf('<span') === -1){
+      // No words were replaced
+      TRANSLATED.innerHTML = 'Everything looks good to me!';
+    }else{
+      TRANSLATED.innerHTML = translate(selection, val);
+    }
   }
 }
 

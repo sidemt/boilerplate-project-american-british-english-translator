@@ -24,8 +24,15 @@ suite('Functional Tests', () => {
       `<span class="highlight">...</span>` tags when the "Translate" button is pressed.
     */
     test("Translation appended to the `translated-sentence` `div`", done => {
+      const input = 'Mangoes are my favorite fruit.';
+      const output = 'Mangoes are my <span class="highlight">favourite</span> fruit.';
 
-      // done();
+      document.getElementById('text-input').value = input;
+      Translator.translateHandler();
+
+      console.log('translated-sentence', document.getElementById('translated-sentence').innerHTML)
+      assert.equal(document.getElementById('translated-sentence').innerHTML, output);
+      done();
     });
 
     /*
@@ -34,8 +41,11 @@ suite('Functional Tests', () => {
       `translated-sentence` `div` when the "Translate" button is pressed.
     */
     test("'Everything looks good to me!' message appended to the `translated-sentence` `div`", done => {
+      document.getElementById('text-input').value = "No need to translate";
+      Translator.translateHandler();
 
-      // done();
+      assert.equal(document.getElementById('translated-sentence').innerHTML, 'Everything looks good to me!');
+      done();
     });
 
     /*
@@ -46,7 +56,7 @@ suite('Functional Tests', () => {
     test("'Error: No text to translate.' message appended to the `translated-sentence` `div`", done => {
       document.getElementById('text-input').value = '';
       Translator.translateHandler();
-      assert.equal(document.getElementById('error-msg').value, 'Error: No text to translate.');
+      assert.equal(document.getElementById('error-msg').innerHTML, 'Error: No text to translate.');
       done();
     });
 
