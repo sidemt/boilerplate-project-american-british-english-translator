@@ -18,9 +18,9 @@ suite('Functional Tests', () => {
   });
 
   suite('Function ____()', () => {
-    /* 
+    /*
       The translated sentence is appended to the `translated-sentence` `div`
-      and the translated words or terms are wrapped in 
+      and the translated words or terms are wrapped in
       `<span class="highlight">...</span>` tags when the "Translate" button is pressed.
     */
     test("Translation appended to the `translated-sentence` `div`", done => {
@@ -28,7 +28,7 @@ suite('Functional Tests', () => {
       // done();
     });
 
-    /* 
+    /*
       If there are no words or terms that need to be translated,
       the message 'Everything looks good to me!' is appended to the
       `translated-sentence` `div` when the "Translate" button is pressed.
@@ -38,26 +38,33 @@ suite('Functional Tests', () => {
       // done();
     });
 
-    /* 
+    /*
       If the text area is empty when the "Translation" button is
-      pressed, append the message 'Error: No text to translate.' to 
+      pressed, append the message 'Error: No text to translate.' to
       the `error-msg` `div`.
     */
     test("'Error: No text to translate.' message appended to the `translated-sentence` `div`", done => {
-
-      // done();
+      document.getElementById('text-input').value = '';
+      Translator.translateHandler();
+      assert.equal(document.getElementById('error-msg').value, 'Error: No text to translate.');
+      done();
     });
 
   });
 
   suite('Function ____()', () => {
-    /* 
+    /*
       The text area and both the `translated-sentence` and `error-msg`
       `divs` are cleared when the "Clear" button is pressed.
     */
     test("Text area, `translated-sentence`, and `error-msg` are cleared", done => {
+      Translator.clearHandler();
 
-      // done();
+      assert.equal(document.getElementById('text-input').value, '');
+      assert.equal(document.getElementById('translated-sentence').innerHTML, '');
+      assert.equal(document.getElementById('error-msg').innerHTML, '');
+
+      done();
     });
 
   });
